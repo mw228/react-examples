@@ -1,0 +1,12 @@
+name: Ping Actions
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main", "master"]
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Actions are alive ✅"
