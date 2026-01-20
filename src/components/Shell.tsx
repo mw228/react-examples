@@ -1,10 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 
+/**
+ * Resume is hosted in /public and served by GitHub Pages
+ * URL resolves to:
+ * https://mw228.github.io/react-examples/Matthew_Wilson_Resume.pdf
+ */
+const RESUME_URL = "/react-examples/Matthew_Wilson_Resume.pdf";
+const LINKEDIN_URL = "https://linkedin.com/in/matthew-wilson-856130221";
+
 function useOnClickOutside(
   ref: React.RefObject<HTMLElement | null>,
   handler: () => void,
-  when: boolean) {
+  when: boolean
+) {
   useEffect(() => {
     if (!when) return;
 
@@ -52,13 +61,67 @@ export function Shell({ children }: { children: React.ReactNode }) {
 
             {/* Desktop nav */}
             <div className="nav-links">
-              <NavLink to="/" end className={({ isActive }) => `navlink ${isActive ? "is-active" : ""}`}>
+              <NavLink
+                to="/"
+                end
+                className={({ isActive }) =>
+                  `navlink ${isActive ? "is-active" : ""}`
+                }
+              >
                 Home
               </NavLink>
-              <NavLink to="/demos" className={({ isActive }) => `navlink ${isActive ? "is-active" : ""}`}>
+
+              <NavLink
+                to="/demos"
+                className={({ isActive }) =>
+                  `navlink ${isActive ? "is-active" : ""}`
+                }
+              >
                 Demos
               </NavLink>
-              <a className="pill" href="https://github.com/mw228" target="_blank" rel="noreferrer">
+
+              <NavLink
+                to="/production"
+                className={({ isActive }) =>
+                  `navlink ${isActive ? "is-active" : ""}`
+                }
+              >
+                Production
+              </NavLink>
+
+              <NavLink
+                to="/skills"
+                className={({ isActive }) =>
+                  `navlink ${isActive ? "is-active" : ""}`
+                }
+              >
+                Skills
+              </NavLink>
+
+              <a
+                className="navlink"
+                href={RESUME_URL}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Resume
+              </a>
+
+              <a
+                className="pill"
+                href={LINKEDIN_URL}
+                target="_blank"
+                rel="noreferrer"
+              >
+                LinkedIn
+              </a>
+
+              <a
+                className="pill"
+                href="https://github.com/mw228"
+                target="_blank"
+                rel="noreferrer"
+              >
                 GitHub
               </a>
             </div>
@@ -82,7 +145,9 @@ export function Shell({ children }: { children: React.ReactNode }) {
                     to="/"
                     end
                     role="menuitem"
-                    className={({ isActive }) => `menu-item ${isActive ? "is-active" : ""}`}
+                    className={({ isActive }) =>
+                      `menu-item ${isActive ? "is-active" : ""}`
+                    }
                     onClick={() => setOpen(false)}
                   >
                     Home
@@ -91,13 +156,59 @@ export function Shell({ children }: { children: React.ReactNode }) {
                   <NavLink
                     to="/demos"
                     role="menuitem"
-                    className={({ isActive }) => `menu-item ${isActive ? "is-active" : ""}`}
+                    className={({ isActive }) =>
+                      `menu-item ${isActive ? "is-active" : ""}`
+                    }
                     onClick={() => setOpen(false)}
                   >
                     Demos
                   </NavLink>
 
+                  <NavLink
+                    to="/production"
+                    role="menuitem"
+                    className={({ isActive }) =>
+                      `menu-item ${isActive ? "is-active" : ""}`
+                    }
+                    onClick={() => setOpen(false)}
+                  >
+                    Production
+                  </NavLink>
+
+                  <NavLink
+                    to="/skills"
+                    role="menuitem"
+                    className={({ isActive }) =>
+                      `menu-item ${isActive ? "is-active" : ""}`
+                    }
+                    onClick={() => setOpen(false)}
+                  >
+                    Skills
+                  </NavLink>
+
+                  <a
+                    role="menuitem"
+                    className="menu-item"
+                    href={RESUME_URL}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={() => setOpen(false)}
+                  >
+                    Resume
+                  </a>
+
                   <div className="menu-sep" />
+
+                  <a
+                    role="menuitem"
+                    className="menu-item"
+                    href={LINKEDIN_URL}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={() => setOpen(false)}
+                  >
+                    LinkedIn
+                  </a>
 
                   <a
                     role="menuitem"
