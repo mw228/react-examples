@@ -1,10 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 
-function useOnClickOutside(
-  ref: React.RefObject<HTMLElement | null>,
-  handler: () => void,
-  when: boolean) {
+function useOnClickOutside(ref: React.RefObject<HTMLElement>, handler: () => void, when: boolean) {
   useEffect(() => {
     if (!when) return;
 

@@ -1,0 +1,37 @@
+.card {
+  display: block;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(18, 34, 69, 0.95), rgba(15, 27, 51, 0.95));
+  padding: 18px;
+  box-shadow: var(--shadow);
+  color: white;
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: baseline;
+}
+
+.card-title {
+  font-weight: 900;
+}
+
+.card-tag {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.card-desc {
+  margin-top: 8px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.card-cta {
+  margin-top: 14px;
+  font-weight: 800;
+  color: var(--brand-2);
+}

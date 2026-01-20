@@ -1,0 +1,105 @@
+.btn {
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-weight: 900;
+  cursor: pointer;
+  color: white;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,.04);
+  transition: transform .06s ease, background .12s ease, border-color .12s ease;
+
+  &:active { transform: translateY(1px); }
+
+  &:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+  }
+}
+
+.btn--primary {
+  border: 1px solid rgba(109, 40, 217, 0.55);
+  background: linear-gradient(90deg, rgba(109,40,217,.95), rgba(56,189,248,.55));
+}
+
+.btn--secondary {
+  border: 1px solid rgba(56,189,248,.35);
+  background: linear-gradient(180deg, rgba(18,34,69,.95), rgba(15,27,51,.95));
+}
+
+.btn--ghost {
+  background: rgba(255,255,255,.04);
+}
+
+.ui-card {
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(18,34,69,.95), rgba(15,27,51,.95));
+  padding: 18px;
+  box-shadow: var(--shadow);
+
+  &__header { margin-bottom: 12px; }
+  &__title { font-weight: 900; margin-bottom: 6px; }
+  &__desc { color: var(--muted); line-height: 1.5; }
+  &__body { }
+}
+
+.ui-card--sub {
+  box-shadow: none;
+  background: rgba(255,255,255,.03);
+}
+
+.demo-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.demo-stack {
+  display: grid;
+  gap: 12px;
+}
+
+.demo-note {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  display: grid;
+  place-items: center;
+  padding: 18px;
+}
+
+.modal {
+  width: min(720px, 100%);
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(18,34,69,.98), rgba(15,27,51,.98));
+  box-shadow: var(--shadow);
+  padding: 16px;
+}
+
+.modal__header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255,255,255,.10);
+}
+
+.modal__title { font-weight: 900; }
+
+.modal__body {
+  padding-top: 12px;
+}
+.modal {
+  width: min(720px, 100%);
+  max-height: min(80vh, 720px);
+  overflow: auto;
+}
