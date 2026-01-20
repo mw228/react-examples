@@ -1,0 +1,37 @@
+.home {
+  max-width: 860px;
+}
+
+.kicker {
+  color: var(--brand-2);
+  font-weight: 900;
+  letter-spacing: 1px;
+  font-size: 13px;
+}
+
+.hero-title {
+  margin: 12px 0 10px;
+  font-size: 54px;
+  line-height: 1.05;
+  letter-spacing: -1px;
+}
+
+.hero-subtitle {
+  margin: 0;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.6;
+  max-width: 720px;
+}
+
+.hero-actions {
+  margin-top: 26px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.pill--primary {
+  border: 1px solid rgba(109, 40, 217, 0.55);
+  background: linear-gradient(90deg, rgba(109, 40, 217, 0.95), rgba(56, 189, 248, 0.55));
+}
