@@ -5,7 +5,13 @@
 
 @use "./components/shell";
 @use "./components/cards";
+@use "./components/ui";
 
 @use "./pages/home";
 @use "./pages/demos";
-@use "./components/ui";
+@use "./pages/weather";
+@use "./pages/todos";
+@use "./pages/forms";
+
+
+

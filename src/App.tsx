@@ -5,6 +5,9 @@ import Demos from "./pages/Demos";
 import ComponentsDemo from "./pages/demos/ComponentsDemo";
 import Production from "./pages/production/Production";
 import Skills from "./pages/skills/Skills";
+import WeatherDemo from "./pages/demos/WeatherDemo";
+import TodosDemo from "./pages/demos/TodosDemo";
+import FormsDemo from "./pages/demos/FormsDemo";
 
 
 
@@ -19,6 +22,9 @@ export default function App() {
           <Route path="/demos/components" element={<ComponentsDemo />} />
           <Route path="/production" element={<Production />} />
           <Route path="/skills" element={<Skills />} />
+          <Route path="/demos/weather" element={<WeatherDemo />} />
+          <Route path="/demos/todos" element={<TodosDemo />} />
+          <Route path="/demos/forms" element={<FormsDemo />} />
 
         </Routes>
       </Shell>

@@ -1,0 +1,34 @@
+/* =========================================================
+   Todo Demo
+   ========================================================= */
+
+.todo-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.todo-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  min-width: 0; /* allows text to wrap */
+}
+
+.todo-check input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+}
+
+.todo-text {
+  color: #fff;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.todo-text.is-done {
+  opacity: 0.65;
+  text-decoration: line-through;
+}
