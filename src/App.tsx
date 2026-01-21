@@ -19,13 +19,14 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/demos" element={<Demos />} />
-          <Route path="/demos/dashboard" element={<DashboardDemo />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
           <Route path="/demos/components" element={<ComponentsDemo />} />
           <Route path="/production" element={<Production />} />
           <Route path="/skills" element={<Skills />} />
           <Route path="/demos/weather" element={<WeatherDemo />} />
           <Route path="/demos/todos" element={<TodosDemo />} />
           <Route path="/demos/forms" element={<FormsDemo />} />
+          <Route path="/demos/dashboard" element={<DashboardDemo />} />
 
         </Routes>
       </Shell>

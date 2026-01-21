@@ -24,7 +24,7 @@ const demos: Demo[] = [
     tag: "Forms",
   },
   {
-    title: "Dashboard Demo (coming soon)",
+    title: "Dashboard Demo",
     description:
       "Filtering, sorting, pagination, URL state, loading and error UX.",
     to: "/demos/dashboard",
