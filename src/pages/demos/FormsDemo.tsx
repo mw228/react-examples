@@ -7,17 +7,13 @@ import { Card } from "../../ui/Card";
 
 const STORAGE_KEY = "mw.reactExamples.formsDemo.v1";
 
-// Keep the *final* type strict (no "")
 const RoleSchema = z.enum(["frontend", "fullstack", "other"]);
 
-// Zod schema: realistic "contact / request" form
-const Schema = z.object({
+// What the form *inputs* hold (role can be "" until user selects)
+const InputSchema = z.object({
   fullName: z.string().min(2, "Please enter your name."),
   email: z.string().email("Please enter a valid email address."),
-  role: z
-    .string()
-    .refine((v) => v !== "", { message: "Please select a role." })
-    .transform((v) => RoleSchema.parse(v)),
+  role: z.string().refine((v) => v !== "", { message: "Please select a role." }),
   company: z.string().min(2, "Please enter a company name."),
   message: z
     .string()
@@ -28,27 +24,28 @@ const Schema = z.object({
   }),
 });
 
+// Final validated payload type (role is strict union)
+const Schema = InputSchema.transform((v) => ({
+  ...v,
+  role: RoleSchema.parse(v.role),
+}));
+
+type FormInput = z.infer<typeof InputSchema>;
 type FormValues = z.infer<typeof Schema>;
 
-function safeParseDraft(raw: string | null): Partial<FormValues> {
+function safeParseDraft(raw: string | null): Partial<FormInput> {
   if (!raw) return {};
   try {
-    const data = JSON.parse(raw) as unknown;
+    const data = JSON.parse(raw) as any;
     if (!data || typeof data !== "object") return {};
 
-    const d = data as any;
-
-    // Only keep role if it's a valid final value (no "")
-    const role =
-      d.role === "frontend" || d.role === "fullstack" || d.role === "other" ? (d.role as FormValues["role"]) : undefined;
-
     return {
-      fullName: typeof d.fullName === "string" ? d.fullName : undefined,
-      email: typeof d.email === "string" ? d.email : undefined,
-      role,
-      company: typeof d.company === "string" ? d.company : undefined,
-      message: typeof d.message === "string" ? d.message : undefined,
-      consent: typeof d.consent === "boolean" ? d.consent : undefined,
+      fullName: typeof data.fullName === "string" ? data.fullName : undefined,
+      email: typeof data.email === "string" ? data.email : undefined,
+      role: typeof data.role === "string" ? data.role : undefined, // allow "" in draft
+      company: typeof data.company === "string" ? data.company : undefined,
+      message: typeof data.message === "string" ? data.message : undefined,
+      consent: typeof data.consent === "boolean" ? data.consent : undefined,
     };
   } catch {
     return {};
@@ -70,15 +67,13 @@ export default function FormsDemo() {
     watch,
     reset,
     setFocus,
-  } = useForm<FormValues>({
-    resolver: zodResolver(Schema),
+  } = useForm<FormInput>({
+    resolver: zodResolver(InputSchema),
     mode: "onBlur",
     defaultValues: {
       fullName: draft.fullName ?? "",
       email: draft.email ?? "",
-      // Important: allow UI to start with "" even though FormValues role is strict.
-      // We cast only at defaultValues boundary to keep the rest of the app typed correctly.
-      role: (draft.role ?? "") as unknown as FormValues["role"],
+      role: draft.role ?? "",
       company: draft.company ?? "",
       message: draft.message ?? "",
       consent: draft.consent ?? false,
@@ -95,17 +90,12 @@ export default function FormsDemo() {
   }, [watched]);
 
   async function fakeSubmitToServer(values: FormValues) {
-    // Simulate latency
     await new Promise((r) => setTimeout(r, 900));
 
-    // Simulate a server-side rule: block "test" emails
     if (values.email.toLowerCase().includes("test")) {
-      const err = new Error("Server validation: Please use a real email address.");
-      (err as any).code = "SERVER_VALIDATION";
-      throw err;
+      throw new Error("Server validation: Please use a real email address.");
     }
 
-    // Demonstrate server error UX
     if (values.message.toLowerCase().includes("error")) {
       throw new Error("Server error: Something went wrong. Please try again.");
     }
@@ -113,22 +103,28 @@ export default function FormsDemo() {
     return { ok: true };
   }
 
-  const onSubmit = handleSubmit(async (values) => {
+  const onSubmit = handleSubmit(async (rawValues) => {
     setServerError(null);
     setSuccess(false);
 
+    // Convert form input -> final validated payload
+    const parsed = Schema.safeParse(rawValues);
+    if (!parsed.success) {
+      // Should be rare since RHF already validates, but keeps the flow safe.
+      setServerError("Please fix the form errors and try again.");
+      return;
+    }
+
     try {
-      await fakeSubmitToServer(values);
+      await fakeSubmitToServer(parsed.data);
       setSuccess(true);
 
-      // Clear draft on success
       localStorage.removeItem(STORAGE_KEY);
 
-      // Reset form
       reset({
         fullName: "",
         email: "",
-        role: "frontend",
+        role: "",
         company: "",
         message: "",
         consent: false,
@@ -139,7 +135,6 @@ export default function FormsDemo() {
     }
   });
 
-  // If submit fails client-side, focus the error summary for screen readers
   useEffect(() => {
     const hasErrors = Object.keys(errors).length > 0;
     if (hasErrors && !isSubmitting && !isSubmitSuccessful) {
@@ -158,7 +153,6 @@ export default function FormsDemo() {
 
       <div className="grid grid--cards">
         <Card title="Example form" description="Includes inline validation, error summary, and server-side error handling.">
-          {/* Error summary (a11y) */}
           {errorEntries.length > 0 && (
             <div
               ref={errorSummaryRef}
@@ -174,7 +168,7 @@ export default function FormsDemo() {
                     <button
                       type="button"
                       className="form-summary__link"
-                      onClick={() => setFocus(name as keyof FormValues)}
+                      onClick={() => setFocus(name as keyof FormInput)}
                     >
                       {err?.message as string}
                     </button>
@@ -245,7 +239,6 @@ export default function FormsDemo() {
                   id="role"
                   className={`select ${errors.role ? "input--error" : ""}`}
                   {...register("role")}
-                  defaultValue=""
                 >
                   <option value="">Select a role…</option>
                   <option value="frontend">Frontend</option>
@@ -297,7 +290,7 @@ export default function FormsDemo() {
                   reset({
                     fullName: "",
                     email: "",
-                    role: "frontend",
+                    role: "",
                     company: "",
                     message: "",
                     consent: false,
