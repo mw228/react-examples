@@ -7,13 +7,17 @@ import { Card } from "../../ui/Card";
 
 const STORAGE_KEY = "mw.reactExamples.formsDemo.v1";
 
+// Keep the *final* type strict (no "")
+const RoleSchema = z.enum(["frontend", "fullstack", "other"]);
+
 // Zod schema: realistic "contact / request" form
 const Schema = z.object({
   fullName: z.string().min(2, "Please enter your name."),
   email: z.string().email("Please enter a valid email address."),
   role: z
-    .enum(["", "frontend", "fullstack", "other"])
-    .refine((v) => v !== "", { message: "Please select a role." }),
+    .string()
+    .refine((v) => v !== "", { message: "Please select a role." })
+    .transform((v) => RoleSchema.parse(v)),
   company: z.string().min(2, "Please enter a company name."),
   message: z
     .string()
@@ -31,7 +35,21 @@ function safeParseDraft(raw: string | null): Partial<FormValues> {
   try {
     const data = JSON.parse(raw) as unknown;
     if (!data || typeof data !== "object") return {};
-    return data as Partial<FormValues>;
+
+    const d = data as any;
+
+    // Only keep role if it's a valid final value (no "")
+    const role =
+      d.role === "frontend" || d.role === "fullstack" || d.role === "other" ? (d.role as FormValues["role"]) : undefined;
+
+    return {
+      fullName: typeof d.fullName === "string" ? d.fullName : undefined,
+      email: typeof d.email === "string" ? d.email : undefined,
+      role,
+      company: typeof d.company === "string" ? d.company : undefined,
+      message: typeof d.message === "string" ? d.message : undefined,
+      consent: typeof d.consent === "boolean" ? d.consent : undefined,
+    };
   } catch {
     return {};
   }
@@ -58,7 +76,9 @@ export default function FormsDemo() {
     defaultValues: {
       fullName: draft.fullName ?? "",
       email: draft.email ?? "",
-      role: (draft.role as FormValues["role"]) ?? "",
+      // Important: allow UI to start with "" even though FormValues role is strict.
+      // We cast only at defaultValues boundary to keep the rest of the app typed correctly.
+      role: (draft.role ?? "") as unknown as FormValues["role"],
       company: draft.company ?? "",
       message: draft.message ?? "",
       consent: draft.consent ?? false,
@@ -108,7 +128,7 @@ export default function FormsDemo() {
       reset({
         fullName: "",
         email: "",
-        role: "",
+        role: "frontend",
         company: "",
         message: "",
         consent: false,
@@ -137,10 +157,7 @@ export default function FormsDemo() {
       </p>
 
       <div className="grid grid--cards">
-        <Card
-          title="Example form"
-          description="Includes inline validation, error summary, and server-side error handling."
-        >
+        <Card title="Example form" description="Includes inline validation, error summary, and server-side error handling.">
           {/* Error summary (a11y) */}
           {errorEntries.length > 0 && (
             <div
@@ -228,13 +245,14 @@ export default function FormsDemo() {
                   id="role"
                   className={`select ${errors.role ? "input--error" : ""}`}
                   {...register("role")}
+                  defaultValue=""
                 >
                   <option value="">Select a role…</option>
                   <option value="frontend">Frontend</option>
                   <option value="fullstack">Full-stack</option>
                   <option value="other">Other</option>
                 </select>
-                {errors.role && <div className="error">{errors.role.message}</div>}
+                {errors.role && <div className="error">{errors.role.message as string}</div>}
               </div>
 
               <div className="field field--full">
@@ -279,7 +297,7 @@ export default function FormsDemo() {
                   reset({
                     fullName: "",
                     email: "",
-                    role: "",
+                    role: "frontend",
                     company: "",
                     message: "",
                     consent: false,
