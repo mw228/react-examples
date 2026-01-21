@@ -11,9 +11,9 @@ const STORAGE_KEY = "mw.reactExamples.formsDemo.v1";
 const Schema = z.object({
   fullName: z.string().min(2, "Please enter your name."),
   email: z.string().email("Please enter a valid email address."),
-  role: z.enum(["frontend", "fullstack", "other"], {
-    errorMap: () => ({ message: "Please select a role." }),
-  }),
+  role: z
+    .enum(["", "frontend", "fullstack", "other"])
+    .refine((v) => v !== "", { message: "Please select a role." }),
   company: z.string().min(2, "Please enter a company name."),
   message: z
     .string()
@@ -58,7 +58,7 @@ export default function FormsDemo() {
     defaultValues: {
       fullName: draft.fullName ?? "",
       email: draft.email ?? "",
-      role: (draft.role as FormValues["role"]) ?? "frontend",
+      role: (draft.role as FormValues["role"]) ?? "",
       company: draft.company ?? "",
       message: draft.message ?? "",
       consent: draft.consent ?? false,
@@ -85,7 +85,7 @@ export default function FormsDemo() {
       throw err;
     }
 
-    // Random-ish failure to demonstrate error UX
+    // Demonstrate server error UX
     if (values.message.toLowerCase().includes("error")) {
       throw new Error("Server error: Something went wrong. Please try again.");
     }
@@ -104,11 +104,11 @@ export default function FormsDemo() {
       // Clear draft on success
       localStorage.removeItem(STORAGE_KEY);
 
-      // Reset form (keep role default)
+      // Reset form
       reset({
         fullName: "",
         email: "",
-        role: "frontend",
+        role: "",
         company: "",
         message: "",
         consent: false,
@@ -121,10 +121,8 @@ export default function FormsDemo() {
 
   // If submit fails client-side, focus the error summary for screen readers
   useEffect(() => {
-    // When there are validation errors after a submit attempt, move focus to summary.
     const hasErrors = Object.keys(errors).length > 0;
     if (hasErrors && !isSubmitting && !isSubmitSuccessful) {
-      // Small delay allows DOM to paint errors
       window.setTimeout(() => errorSummaryRef.current?.focus(), 0);
     }
   }, [errors, isSubmitting, isSubmitSuccessful]);
@@ -231,6 +229,7 @@ export default function FormsDemo() {
                   className={`select ${errors.role ? "input--error" : ""}`}
                   {...register("role")}
                 >
+                  <option value="">Select a role…</option>
                   <option value="frontend">Frontend</option>
                   <option value="fullstack">Full-stack</option>
                   <option value="other">Other</option>
@@ -280,7 +279,7 @@ export default function FormsDemo() {
                   reset({
                     fullName: "",
                     email: "",
-                    role: "frontend",
+                    role: "",
                     company: "",
                     message: "",
                     consent: false,
@@ -293,10 +292,7 @@ export default function FormsDemo() {
           </form>
         </Card>
 
-        <Card
-          title="What this demonstrates"
-          description="Patterns interviewers look for in production forms."
-        >
+        <Card title="What this demonstrates" description="Patterns interviewers look for in production forms.">
           <ul className="card-desc" style={{ margin: 0, paddingLeft: "1.1rem" }}>
             <li>Schema validation (Zod) + ergonomic form state (React Hook Form)</li>
             <li>Accessible error summary + focus management</li>

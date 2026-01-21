@@ -17,7 +17,7 @@ const demos: Demo[] = [
     tag: "UI Kit",
   },
   {
-    title: "Forms Demo (coming soon)",
+    title: "Forms Demo",
     description:
       "React Hook Form + Zod validation, async submit, accessible error handling.",
     to: "/demos/forms",
