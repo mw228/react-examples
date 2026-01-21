@@ -8,6 +8,7 @@ import Skills from "./pages/skills/Skills";
 import WeatherDemo from "./pages/demos/WeatherDemo";
 import TodosDemo from "./pages/demos/TodosDemo";
 import FormsDemo from "./pages/demos/FormsDemo";
+import DashboardDemo from "./pages/demos/DashboardDemo";
 
 
 
@@ -18,7 +19,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/demos" element={<Demos />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="/demos/dashboard" element={<DashboardDemo />} />
           <Route path="/demos/components" element={<ComponentsDemo />} />
           <Route path="/production" element={<Production />} />
           <Route path="/skills" element={<Skills />} />
