@@ -52,6 +52,12 @@ const demos: Demo[] = [
   to: "/demos/todos",
   tag: "State",
 },
+{
+  title: "Auth + Protected Routes",
+  description: "Mock login, session persistence, protected routes, and role-based access control.",
+  to: "/demos/auth/login",
+  tag: "Auth"
+},
 
 
 ];
