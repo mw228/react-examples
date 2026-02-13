@@ -166,7 +166,7 @@ export default function DashboardDemo() {
         Fetch + normalize data, then filter/search, sort, and paginate with URL-synced state for shareable views.
       </p>
 
-      <div className="grid grid--cards">
+      <div className="dashboard-layout">
         <Card title="Controls" description="Search and filters update the table and persist in the URL.">
           <div className="dash-controls">
             <div className="dash-field">
