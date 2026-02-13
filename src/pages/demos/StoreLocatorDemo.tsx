@@ -45,17 +45,18 @@ export default function StoreLocatorDemo() {
   );
 
   useEffect(() => {
-    fetch("https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json")
-      .then((res) => res.json())
-      .then((topology) => {
-        const geojson = feature(
-          topology,
-          topology.objects.states
-        ) as FeatureCollection<Geometry>;
+  fetch("https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json")
+    .then((res) => res.json())
+    .then((topology) => {
+      const geojson = feature(
+        topology,
+        topology.objects.states
+      ) as unknown as FeatureCollection<Geometry>;
 
-        setStates(geojson.features as StateFeature[]);
-      });
-  }, []);
+      setStates(geojson.features as StateFeature[]);
+    });
+}, []);
+
 
   const storeLookup = stateStores as Record<string, Store[]>;
   const activeStores = activeState
