@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { geoAlbersUsa, geoPath } from "d3-geo";
 import { feature } from "topojson-client";
+import type { Feature, FeatureCollection, Geometry } from "geojson";
 import stateStores from "../../data/stateStores.json";
 
 type Store = {
@@ -11,7 +12,7 @@ type Store = {
   lng: number;
 };
 
-type GeoFeature = GeoJSON.Feature<GeoJSON.Geometry, any>;
+type StateFeature = Feature<Geometry, { name?: string }>;
 
 const FIPS_TO_CODE: Record<string, string> = {
   "01": "AL","02": "AK","04": "AZ","05": "AR","06": "CA","08": "CO","09": "CT","10": "DE",
@@ -24,7 +25,7 @@ const FIPS_TO_CODE: Record<string, string> = {
 };
 
 export default function StoreLocatorDemo() {
-  const [states, setStates] = useState<GeoFeature[]>([]);
+  const [states, setStates] = useState<StateFeature[]>([]);
   const [activeState, setActiveState] = useState<string | null>(null);
 
   const width = 975;
@@ -50,8 +51,9 @@ export default function StoreLocatorDemo() {
         const geojson = feature(
           topology,
           topology.objects.states
-        ) as GeoJSON.FeatureCollection;
-        setStates(geojson.features as GeoFeature[]);
+        ) as FeatureCollection<Geometry>;
+
+        setStates(geojson.features as StateFeature[]);
       });
   }, []);
 
@@ -78,7 +80,7 @@ export default function StoreLocatorDemo() {
 
             return (
               <path
-                key={state.id}
+                key={String(state.id)}
                 d={pathGenerator(state) ?? ""}
                 className={`map-state ${
                   activeState === code ? "is-active" : ""
