@@ -9,6 +9,8 @@ import WeatherDemo from "./pages/demos/WeatherDemo";
 import TodosDemo from "./pages/demos/TodosDemo";
 import FormsDemo from "./pages/demos/FormsDemo";
 import DashboardDemo from "./pages/demos/DashboardDemo";
+import StoreLocatorDemo from "./pages/demos/StoreLocatorDemo";
+
 
 import Production from "./pages/production/Production";
 import Skills from "./pages/skills/Skills";
@@ -41,6 +43,8 @@ export default function App() {
             <Route path="/demos/todos" element={<TodosDemo />} />
             <Route path="/demos/forms" element={<FormsDemo />} />
             <Route path="/demos/dashboard" element={<DashboardDemo />} />
+            <Route path="/demos/store-locator" element={<StoreLocatorDemo />} />
+
 
             {/* Auth demo */}
             <Route path="/demos/auth/login" element={<LoginDemo />} />

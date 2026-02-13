@@ -58,6 +58,13 @@ const demos: Demo[] = [
   to: "/demos/auth/login",
   tag: "Auth"
 },
+{
+  title: "Store Locator (SVG + D3)",
+  description:
+    "Interactive US map built with D3 projection and TopoJSON. Click a state to reveal projected store pins and a dynamic location panel.",
+  to: "/demos/store-locator",
+  tag: "Data Visualization"
+}
 
 
 ];
