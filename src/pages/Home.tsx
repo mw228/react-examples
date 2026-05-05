@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const RESUME_URL = "/react-examples/Matthew_Wilson_Resume.pdf";
+const RESUME_URL = "/react-examples/Matthew_Wilson_Software_Engineer.pdf";
 const LINKEDIN_URL = "https://linkedin.com/in/matthew-wilson-856130221";
 const GITHUB_URL = "https://github.com/mw228";
 const VUE_SITE_URL = "https://mw228.github.io/Sample-Work/";
@@ -22,6 +22,9 @@ export default function Home() {
       </p>
 
       <div className="hero-actions">
+        <a className="pill pill--primary" href="https://mw228.github.io/resume-builder/" target="_blank" rel="noreferrer">
+  Resume Builder →
+</a>
         <Link to="/demos" className="pill pill--primary">
           View demos →
         </Link>
@@ -49,51 +52,70 @@ export default function Home() {
 
       {/* Highlights */}
       <div className="grid grid--cards" style={{ marginTop: 24 }}>
-        <section className="card" aria-label="Accessibility and quality">
-          <div className="card-top">
-            <div className="card-title">Accessibility-first UI</div>
-            <div className="card-tag">WCAG</div>
-          </div>
-          <div className="card-desc">
-            Semantic HTML, keyboard support, focus management, and error UX that’s actually usable.
-          </div>
-          <div className="card-cta">
-            <Link className="navlink" to="/demos">
-              See patterns →
-            </Link>
-          </div>
-        </section>
+  {/* Resume Builder (FEATURED) */}
+  <section className="card card--featured" aria-label="Resume Builder application">
+    <div className="card-top">
+      <div className="card-title">Resume Builder</div>
+      <div className="card-tag">FEATURED</div>
+    </div>
+    <div className="card-desc">
+      Full application with real-time editing, structured data modeling, and print-optimized PDF generation.
+    </div>
+    <div className="card-cta mt-4">
+  <div className="cta-primary">
+    <a
+      className="pill pill--primary"
+      href="https://mw228.github.io/resume-builder/"
+      target="_blank"
+      rel="noreferrer"
+    >
+      View project →
+    </a>
+  </div>
 
-        <section className="card" aria-label="Modern React engineering">
-          <div className="card-top">
-            <div className="card-title">Modern React + TypeScript</div>
-            <div className="card-tag">DX</div>
-          </div>
-          <div className="card-desc">
-            Typed components, reusable primitives, scalable routing, and clean structure you can discuss in an interview.
-          </div>
-          <div className="card-cta">
-            <Link className="navlink" to="/demos/components">
-              Component library →
-            </Link>
-          </div>
-        </section>
+  <a
+    href="https://github.com/mw228/resume-builder"
+    target="_blank"
+    rel="noreferrer"
+    className="cta-secondary"
+  >
+    GitHub ↗
+  </a>
+</div>
+  </section>
 
-        <section className="card" aria-label="Cross-framework experience">
-          <div className="card-top">
-            <div className="card-title">Cross-framework experience</div>
-            <div className="card-tag">React + Vue</div>
-          </div>
-          <div className="card-desc">
-            Comfortable shipping production UI across React and Vue with consistent patterns and maintainable styles.
-          </div>
-          <div className="card-cta">
-            <a className="navlink" href={VUE_SITE_URL} target="_blank" rel="noreferrer">
-              Vue sample site ↗
-            </a>
-          </div>
-        </section>
-      </div>
+  {/* React Demos */}
+  <section className="card" aria-label="React demos">
+    <div className="card-top">
+      <div className="card-title">React Demos</div>
+      <div className="card-tag">UI</div>
+    </div>
+    <div className="card-desc">
+      Forms, dashboards, authentication, API state, and data visualization patterns built as small, reviewable demos.
+    </div>
+    <div className="card-cta">
+      <Link className="navlink" to="/demos">
+        Explore demos →
+      </Link>
+    </div>
+  </section>
+
+  {/* Vue Sample Site */}
+  <section className="card" aria-label="Vue sample site">
+    <div className="card-top">
+      <div className="card-title">Vue Sample Site</div>
+      <div className="card-tag">Vue</div>
+    </div>
+    <div className="card-desc">
+      Production-style Vue app demonstrating routing, layout structure, and deploy-ready architecture.
+    </div>
+    <div className="card-cta">
+      <a className="navlink" href={VUE_SITE_URL} target="_blank" rel="noreferrer">
+        View site →
+      </a>
+    </div>
+  </section>
+</div>
     </div>
   );
 }

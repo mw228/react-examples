@@ -224,7 +224,10 @@
   background: rgba(255,255,255,.10);
   margin: 8px 6px;
 }
-
+.main {
+  flex: 1;
+  background: var(--bg); // or your dark base color
+}
 /* Responsive behavior */
 @include md {
   .nav-links {
@@ -256,4 +259,10 @@
     align-items: center;
     justify-content: center;
   }
+}
+.shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg); 
 }

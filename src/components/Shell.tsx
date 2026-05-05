@@ -6,7 +6,7 @@ import { Link, NavLink } from "react-router-dom";
  * URL resolves to:
  * https://mw228.github.io/react-examples/Matthew_Wilson_Resume.pdf
  */
-const RESUME_URL = "/react-examples/Matthew_Wilson_Resume.pdf";
+const RESUME_URL = "/react-examples/Matthew_Wilson_Software_Engineer.pdf";
 const LINKEDIN_URL = "https://linkedin.com/in/matthew-wilson-856130221";
 
 function useOnClickOutside(

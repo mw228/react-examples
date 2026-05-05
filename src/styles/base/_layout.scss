@@ -28,3 +28,16 @@
     grid-template-columns: 1fr;
   }
 }
+html, body {
+  height: 100%;
+}
+
+#root {
+  min-height: 100%;
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
